@@ -39,8 +39,8 @@ let settings = [
 { setting: "maintenanceMode", description: "Bakım modunu açıp kapatırsınız.", type: "selection" },
 ];
 
-let selection = args[0];
-let setting = settings.find(setting => setting.isim === selection);
+let selection = args[0]; 
+let setting = settings.find(setting => setting.setting === selection);
 
 if (selection == "liste") {
 message.channel.send(embed.setDescription(`:no_entry_sign: Hey! Yardıma mı ihtiyacın var? Aşağıdaki listeden isteklerini giderebilirsin!`).addField("Ayar Listesi", `${settings.map(qwe => `\`${qwe.setting}\``).join(", ")}.`))
@@ -61,24 +61,24 @@ if (setting.type == "channel") {
 let tag = message.mentions.roles.first() || message.guild.channels.cache.get(args[1]);
 if (!tag) return message.channel.send(embed.setDescription(`:no_entry_sign: Bir **kanal** belirtmelisiniz.`)).then(qwe => qwe.delete({timeout: 3 * 1000}));
 db.set(`settings.${setting.setting}`, tag.id);
-return message.channel.send(embed.setDescription(`:tada: **${setting.name}** isimli ayar başarıyla "${tag}" olarak ayarlandı!`)).then(qwe => qwe.delete({timeout: 5 * 1000}));
+return message.channel.send(embed.setDescription(`:tada: **${setting.setting}** isimli ayar başarıyla "${tag}" olarak ayarlandı!`)).then(qwe => qwe.delete({timeout: 5 * 1000}));
 } else if (setting.type == "role") {
 let tag = message.mentions.roles.first() || message.guild.roles.cache.get(args[1]);
 if (!tag) return message.channel.send(embed.setDescription(`:no_entry_sign: Bir **rol** belirtmelisiniz.`)).then(qwe => qwe.delete({timeout: 3 * 1000}));
 db.set(`settings.${setting.setting}`, tag.id);
-return message.channel.send(embed.setDescription(`:tada: **${setting.name}** isimli ayar başarıyla "${tag}" olarak ayarlandı!`)).then(qwe => qwe.delete({timeout: 5 * 1000}));
+return message.channel.send(embed.setDescription(`:tada: **${setting.setting}** isimli ayar başarıyla "${tag}" olarak ayarlandı!`)).then(qwe => qwe.delete({timeout: 5 * 1000}));
 } else if (setting.type == "roles") {
 let tag;
 if(message.mentions.roles.size >= 1) tag = message.mentions.roles.map(role => role.id);
 else tag = args.splice(1).filter(qwe => message.guild.roles.cache.some(ewq => qwe == ewq.id));
 if (!tag) return message.channel.send(embed.setDescription(`:no_entry_sign: Bir **rol** belirtmelisiniz.`)).then(qwe => qwe.delete({timeout: 3 * 1000}));
 db.set(`settings.${setting.setting}`, tag);
-return message.channel.send(embed.setDescription(`:tada: **${setting.name}** isimli ayar başarıyla "${tag}" olarak ayarlandı!`)).then(qwe => qwe.delete({timeout: 5 * 1000}));
+return message.channel.send(embed.setDescription(`:tada: **${setting.setting}** isimli ayar başarıyla "${tag}" olarak ayarlandı!`)).then(qwe => qwe.delete({timeout: 5 * 1000}));
 } else if (setting.type == "symbol") {
 let tag = args.splice(1).join(" ");
 if (!tag) return message.channel.send(embed.setDescription(`:no_entry_sign: Bir **ayar** belirtmelisiniz.`)).then(qwe => qwe.delete({timeout: 3 * 1000}));
 db.set(`settings.${setting.setting}`, tag);
-return message.channel.send(embed.setDescription(`:tada: **${setting.name}** isimli ayar başarıyla "${tag}" olarak ayarlandı!`)).then(qwe => qwe.delete({timeout: 5 * 1000}));
+return message.channel.send(embed.setDescription(`:tada: **${setting.setting}** isimli ayar başarıyla "${tag}" olarak ayarlandı!`)).then(qwe => qwe.delete({timeout: 5 * 1000}));
 } else if (setting.type == "symbols") {
 let taglar = db.get(`setting.${setting.setting}`);
 let tag = args.splice(1).join(" ");
@@ -86,10 +86,10 @@ if(taglar.includes(tag)) taglar = taglar.filter(qwe => qwe != tag);
 else taglar.push(tag);
 if (!tag) return message.channel.send(embed.setDescription(`:no_entry_sign: Bir **ayar** belirtmelisiniz.`)).then(qwe => qwe.delete({timeout: 3 * 1000}));
 db.set(`settings.${setting.setting}`, taglar);
-return message.channel.send(embed.setDescription(`:tada: **${setting.name}** isimli ayar başarıyla "${tag}" olarak ayarlandı!`).addField("Ayarın içerisindeki diğer veriler.", taglar ? taglar.join(", ") : "Bulunamadı.")).then(qwe => qwe.delete({timeout: 5 * 1000}));
+return message.channel.send(embed.setDescription(`:tada: **${setting.setting}** isimli ayar başarıyla "${tag}" olarak ayarlandı!`).addField("Ayarın içerisindeki diğer veriler.", taglar ? taglar.join(", ") : "Bulunamadı.")).then(qwe => qwe.delete({timeout: 5 * 1000}));
 } else if (setting.type == "selection") {
 db.set(`settings.${setting.setting}`, !db.get(`settings.${setting.setting}`));
-return message.channel.send(embed.setDescription(`:tada: **${setting.name}** isimli ayar başarıyla ${db.get(`settings.${setting.setting}`) ? "açıldı!" : "kapatıldı!"}`)).then(qwe => qwe.delete({timeout: 5 * 1000}));
+return message.channel.send(embed.setDescription(`:tada: **${setting.setting}** isimli ayar başarıyla ${db.get(`settings.${setting.setting}`) ? "açıldı!" : "kapatıldı!"}`)).then(qwe => qwe.delete({timeout: 5 * 1000}));
 }
 };
 
