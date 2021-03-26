@@ -3,7 +3,7 @@ client = new Discord.Client();
 const db = require("quick.db");
 const conf = require("../config.js");
 
-module.exports.run = async (client, message, args, settings, embed) => {
+module.exports.run = async (client, message, args, embed) => {
 
 if (message.guild.ownerID != message.author.id && !conf.geliştiriciler.includes(message.author.id)) return message.channel.send(embed.setDescription("Sunucu ayarlarını güncelleyebilmek için yeterli yetkilere ve izinlere sahip değilsin.")).then(qwe => qwe.delete({timeout: 5 * 1000}));
 
