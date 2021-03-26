@@ -73,7 +73,7 @@ if(message.mentions.roles.size >= 1) tag = message.mentions.roles.map(role => ro
 else tag = args.splice(1).filter(qwe => message.guild.roles.cache.some(ewq => qwe == ewq.id));
 if (!tag) return message.channel.send(embed.setDescription(`:no_entry_sign: Bir **rol** belirtmelisiniz.`)).then(qwe => qwe.delete({timeout: 3 * 1000}));
 db.set(`settings.${setting.setting}`, tag);
-return message.channel.send(embed.setDescription(`:tada: **${setting.setting}** isimli ayar başarıyla "${tag}" olarak ayarlandı!`)).then(qwe => qwe.delete({timeout: 5 * 1000}));
+return message.channel.send(embed.setDescription(`:tada: **${setting.setting}** isimli ayar başarıyla "${tag.map(role => message.guild.roles.cache.filter(role2 => role == role2.id).map(role => role.toString())).join(", ")}" olarak ayarlandı!`)).then(qwe => qwe.delete({timeout: 5 * 1000}));
 } else if (setting.type == "symbol") {
 let tag = args.splice(1).join(" ");
 if (!tag) return message.channel.send(embed.setDescription(`:no_entry_sign: Bir **ayar** belirtmelisiniz.`)).then(qwe => qwe.delete({timeout: 3 * 1000}));
