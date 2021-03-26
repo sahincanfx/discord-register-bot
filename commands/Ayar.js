@@ -58,7 +58,7 @@ return;
 if (!selection || !settings.some(setting => setting.setting == selection && "liste") && !settings.some(setting => setting.setting == selection && "bilgi")) return message.channel.send(embed.setDescription(`:no_entry_sign: Hey! Sanırım bir hata yaptın. Bu liste sana yardımcı olur diye düşündüm :blush:`).addField("Ayar Listesi", `${settings.map(qwe => `\`${qwe.setting}\``).join(", ")}.`)).then(qwe => qwe.delete({timeout: 15 * 1000}));
 
 if (setting.type == "channel") {
-let tag = message.mentions.roles.first() || message.guild.channels.cache.get(args[1]);
+let tag = message.mentions.channels.first() || message.guild.channels.cache.get(args[1]);
 if (!tag) return message.channel.send(embed.setDescription(`:no_entry_sign: Bir **kanal** belirtmelisiniz.`)).then(qwe => qwe.delete({timeout: 3 * 1000}));
 db.set(`settings.${setting.setting}`, tag.id);
 return message.channel.send(embed.setDescription(`:tada: **${setting.setting}** isimli ayar başarıyla "${tag}" olarak ayarlandı!`)).then(qwe => qwe.delete({timeout: 5 * 1000}));
